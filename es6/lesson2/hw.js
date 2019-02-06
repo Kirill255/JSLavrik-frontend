@@ -1,4 +1,4 @@
-// /* global Proxy */
+/* global Proxy */
 
 // способ с Object.defineProperty
 
@@ -103,10 +103,44 @@ class EmailParser {
   }
 }
 
-// function watchObj(node, callback) {
-//   /* return new Proxy(node, {...}) */
-//   return node;
-// }
+function watchObj(node, callback) {
+  return new Proxy(node, {
+    // cleverDiv.innerHTML = "<strong>HTML</strong><em>Changed</em>"; чтобы работала эта строка нужно сделать сеттер
+    set(target, name, value) {
+      target[name] = value;
+      callback(name, value); // это вывод в консоль function(prop, val) { console.log(prop, val);}
+      return true;
+    },
+    // cleverDiv.style.color = "red";
+    // get(target, name) {
+    //   return watchObj(target[name], callback);
+    // },
 
-// export { watchObj, EmailParser };
-export { EmailParser };
+    // console.log(cleverDiv.innerHTML);
+    // get(target, name) {
+    //   switch (typeof target[name]) {
+    //     case "object":
+    //       return watchObj(target[name], callback);
+    //     default:
+    //       return target[name];
+    //   }
+    // },
+
+    // cleverDiv.querySelector("em").style.color = "green";
+    get(target, name) {
+      switch (typeof target[name]) {
+        // если поле объект, то рекурсивно парсим дальше cleverDiv.style.color
+        case "object":
+          return watchObj(target[name], callback);
+        // если поле функция, то нам нужно привязать контекст cleverDiv.querySelector()
+        case "function":
+          return target[name].bind(target);
+        // если поле просто поле, то возвращаем значение поля cleverDiv.innerHTML
+        default:
+          return target[name];
+      }
+    }
+  });
+}
+
+export { watchObj, EmailParser };
