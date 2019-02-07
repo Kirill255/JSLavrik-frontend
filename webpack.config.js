@@ -2,7 +2,7 @@
 let path = require("path");
 
 let conf = {
-  entry: "./es6/lesson3.js",
+  entry: "./es6/js-lesson3-hw/main.js",
   output: {
     path: path.resolve(__dirname, "./js"),
     filename: "main.js",
