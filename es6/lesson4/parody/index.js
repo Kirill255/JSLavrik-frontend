@@ -1,4 +1,4 @@
-/* global HTMLElement */
+/* global HTMLElement Proxy */
 export class Parody {
   constructor(props) {
     if (typeof props !== "object") {
@@ -8,6 +8,15 @@ export class Parody {
     this.props = props;
     this.isMount = false;
     this.targetNode;
+  }
+
+  initState(obj) {
+    this.state = watchObj(obj, this.render.bind(this));
+  }
+
+  setState(newState) {
+    Object.assign(this.state, newState);
+    this.render();
   }
 
   bindMount(selector) {
@@ -30,9 +39,6 @@ export function ParodyDom(tag, props, ...children) {
   if (typeof tag === "function") {
     return new tag(props).render();
   }
-  console.log(tag);
-  console.log(props);
-  console.log(children);
 
   let node = document.createElement(tag);
 
@@ -54,4 +60,24 @@ export function ParodyDom(tag, props, ...children) {
   Object.assign(node, props);
 
   return node;
+}
+
+function watchObj(node, callback) {
+  return new Proxy(node, {
+    set(target, name, value) {
+      target[name] = value;
+      callback(name, value);
+      return true;
+    },
+    get(target, name) {
+      switch (typeof target[name]) {
+        case "object":
+          return watchObj(target[name], callback);
+        case "function":
+          return target[name].bind(target);
+        default:
+          return target[name];
+      }
+    }
+  });
 }
