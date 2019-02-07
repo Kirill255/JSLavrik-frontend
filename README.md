@@ -57,6 +57,8 @@
    - Создание небольшого приложения
    - Подведение итогов
 
+Upd: Декораторы классов из 4 урока вынесены в 5 урок, в 4 уроке рассмотрены только идеи компонентного подхода, поток данных/генерация событий, и написана пародия на фреймворк.
+
 ### Установка webpack и babel
 
 1. `npm i -D webpack webpack-cli webpack-dev-server`
@@ -124,6 +126,30 @@ module.exports = (env, options) => {
 
   return conf; // обязательно вернуть конфиг, мы же его экспортируем из файла
 };
+```
+
+4. Ставим babel плагин для работы с jsx `npm i -D @babel/plugin-transform-react-jsx`
+
+```json
+{
+  // ...
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    ["@babel/plugin-transform-react-jsx", { "pragma": "ParodyDom" }]
+  ]
+}
+```
+
+Ключ `pragma` по-умолчанию равен `"pragma": "React.createElement"`, но у нас нет сдесь реакта, мы хотим просто использовать сам `jsx`, но этот ключ можно изменить на любое! другое название, которое будет использоваться для создания элементов, тоесть в реакте это выглядит следующим образом:
+
+```js
+React.createElement("div", { className: "" }); // и т.д.
+```
+
+а у нас это теперь будет выглядеть так:
+
+```js
+ParodyDom("div", { className: "" }); // и т.д.
 ```
 
 #### babel-polyfill
