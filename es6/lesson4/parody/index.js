@@ -36,14 +36,20 @@ export function ParodyDom(tag, props, ...children) {
 
   let node = document.createElement(tag);
 
-  children.forEach((child) => {
+  function addChildren(child) {
     if (child instanceof HTMLElement) {
       node.appendChild(child);
+    } else if (typeof child === "object") {
+      for (let elem of child) {
+        addChildren(elem);
+      }
     } else {
       let textNode = document.createTextNode(child);
       node.appendChild(textNode);
     }
-  });
+  }
+
+  children.forEach(addChildren);
 
   Object.assign(node, props);
 

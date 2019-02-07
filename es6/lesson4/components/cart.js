@@ -26,28 +26,29 @@ export default class Cart extends Parody {
       return total + item.price * item.current;
     }, 0);
 
-    let prod = this.state.products;
+    let inputs = this.state.products.map((item, i) => {
+      return (
+        <div>
+          <InputNumber
+            min={1}
+            max={item.rest}
+            value={item.current}
+            change={this.onChange.bind(this, i)}
+          />
+        </div>
+      );
+    });
 
     return super.render(
       <div>
-        <InputNumber
-          min="1"
-          max={prod[0].rest}
-          value={prod[0].current}
-          change={this.onChange.bind(this, 0)}
-        />
-        <InputNumber
-          min="1"
-          max={prod[1].rest}
-          value={prod[1].current}
-          change={this.onChange.bind(this, 1)}
-        />
+        {inputs}
         <hr />
         <div>{sum}</div>
       </div>
     );
 
     /*
+            п. №2
             // правильный вариант
             let inputs = this.state.products.map((item, i) => {
                 return <InputNumber min={1} max={item.rest} value={item.current}
@@ -65,6 +66,8 @@ export default class Cart extends Parody {
             // но он не сработает! inputs - массив, в ParodyDom его приравняют к textNode
             // в итоге получится [object HTMLDivElement],[object HTMLDivElement] вместо компонетов
             // поправьте данный момент
+
+            // Решение: нужно сделать проверку, на то что node может быть массивом элементов(но массив это слишком конктретный случай, нужно более универсальное решение, поэтому сделаем проверку на object), и дальше рекурсивно пройтись по этому массиву node, поясню у нас в ParodyDom идёт проверка на 'child instanceof HTMLElement' если нет, то это textNode, именно это и происходит, у нас inputs -  это массив, тоесть это не! 'instanceof HTMLElement', а следовательно приравнивается к textNode
         */
   }
 }
