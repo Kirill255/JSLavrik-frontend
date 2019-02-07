@@ -18,7 +18,37 @@ export default class Cart extends Parody {
         в идеале здесь не хотелось бы вызывать render вручную
         на уровне базового класса скрестите state и watchObj из дз№2 для минимальной реактивности
         она не будет настоящей, например, this.state.products.push таким образом реактивным не станет
+
+        upd: сделали свойства массива реактивными, также как это сделано во vuejs, а точнее как это будет сделано во vue 3 (во vue 3 будут proxy, вместо геттеров/сеттеров), таким образом this.state.products.push станет реактивным
     */
+  }
+
+  onAdd = () => {
+    /*let products = [...this.state.products, {
+        price: 500,
+        rest: 20,
+        current: 1
+    }];
+
+    this.setState({
+        products
+    });*/
+
+    this.state.products.push({
+      price: 500,
+      rest: 20,
+      current: 1
+    });
+  };
+
+  onRemove(ind) {
+    this.state.products.splice(ind, 1);
+    /*let products = [...this.state.products];
+    products.splice(ind, 1);
+
+    this.setState({
+        products
+    });*/
   }
 
   render() {
@@ -36,6 +66,7 @@ export default class Cart extends Parody {
             value={item.current}
             change={this.onChange.bind(this, i)}
           />
+          <input type="button" value="x" onclick={this.onRemove.bind(this, i)} />
           <hr />
         </div>
       );
@@ -46,6 +77,7 @@ export default class Cart extends Parody {
         {inputs}
         <div>{sum}</div>
         <hr />
+        <input type="button" value="+" onclick={this.onAdd} />
       </div>
     );
 
