@@ -2,14 +2,22 @@
 let path = require("path");
 
 let conf = {
-  entry: "./es6/lesson4/index.js",
+  entry: "./es6/lesson5-ajax/index.js",
   output: {
     path: path.resolve(__dirname, "./js"),
     filename: "main.js",
     publicPath: "js/"
   },
   devServer: {
-    overlay: true
+    overlay: true,
+    proxy: {
+      "/js-frontend-api/**": {
+        // target: "http://localhost/",
+        target: "http://faceprog.ru/",
+        secure: false,
+        changeOrigin: true
+      }
+    }
   },
   module: {
     rules: [

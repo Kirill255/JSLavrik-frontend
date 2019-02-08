@@ -102,6 +102,24 @@ module.exports = conf;
 }
 ```
 
+#### proxy
+
+1. Если нужен proxy, то надо добавить настройки в `webpack.config.js`:
+
+```js
+// ...
+devServer: {
+  // ...
+  proxy: { // https://webpack.js.org/configuration/dev-server/#devserver-proxy
+    "/js-frontend-api/**": {
+      target: "http://localhost/",
+      secure: false,
+      changeOrigin: true
+    }
+  }
+},
+```
+
 #### plugins
 
 1. Ставим babel плагин `npm install -D @babel/plugin-proposal-class-properties`
