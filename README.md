@@ -200,3 +200,30 @@ https://www.npmjs.com/package/babel-polyfill - тут старая (но вро�
   }
 }
 ```
+
+### React
+
+При сборке получал предупреждение (оно не критичное вроде, можно его оставить), [его можно убрать](https://stackoverflow.com/questions/29576341/what-does-the-code-generator-has-deoptimised-the-styling-of-some-file-as-it-e):
+
+`[BABEL] Note: The code generator has deoptimised the styling of /node_modules/react-dom/cjs/react-dom.development.js as it exceeds the max of 500KB.`
+
+```js
+// webpack.config.js
+module: {
+  rules: [
+    {
+      test: /\.js$/,
+      loader: "babel-loader",
+      exclude: path.resolve(__dirname, "./node_modules") // добавили
+    }
+  ];
+}
+```
+
+```json
+// .babelrc
+{
+  // ...
+  "compact": true // добавили
+}
+```

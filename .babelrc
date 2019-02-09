@@ -1,7 +1,5 @@
 {
   "presets": ["@babel/preset-env"],
-  "plugins": [
-    "@babel/plugin-proposal-class-properties",
-    ["@babel/plugin-transform-react-jsx", { "pragma": "ParodyDom" }]
-  ]
+  "plugins": ["@babel/plugin-proposal-class-properties", ["@babel/plugin-transform-react-jsx"]],
+  "compact": true
 }

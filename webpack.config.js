@@ -2,7 +2,7 @@
 let path = require("path");
 
 let conf = {
-  entry: "./es6/lesson6-axios/index.js",
+  entry: "./es6/lesson7/index.js",
   output: {
     path: path.resolve(__dirname, "./js"),
     filename: "main.js",
@@ -23,8 +23,8 @@ let conf = {
     rules: [
       {
         test: /\.js$/,
-        loader: "babel-loader"
-        // exclude: '/node_modules/'
+        loader: "babel-loader",
+        exclude: path.resolve(__dirname, "./node_modules")
       }
     ]
   }
