@@ -1,17 +1,17 @@
 /* global fetch FormData */
 
 export async function all() {
-  let data = await makeRequest("/js-frontend-api/articles.php");
+  let data = await makeRequest("/js-hw-api/articles.php");
   return data;
 }
 
 export async function one(id) {
-  let data = await makeRequest(`/js-frontend-api/articles.php?id=${id}`);
+  let data = await makeRequest(`/js-hw-api/articles.php?id=${id}`);
   return data;
 }
 
 export async function remove(id) {
-  let data = await makeRequest(`/js-frontend-api/articles.php?id=${id}`, {
+  let data = await makeRequest(`/js-hw-api/articles.php?id=${id}`, {
     method: "DELETE"
   });
 
@@ -25,7 +25,7 @@ export async function add(article) {
     formData.append(name, article[name]);
   }
 
-  let data = await makeRequest("/js-frontend-api/articles.php", {
+  let data = await makeRequest("/js-hw-api/articles.php", {
     method: "POST",
     body: formData
   });
@@ -39,7 +39,7 @@ export async function edit(id, article) {
     id
   };
 
-  let data = await makeRequest("/js-frontend-api/articles.php", {
+  let data = await makeRequest("/js-hw-api/articles.php", {
     method: "PUT",
     body: JSON.stringify(forServer)
   });
@@ -48,6 +48,12 @@ export async function edit(id, article) {
 }
 
 function makeRequest(url, options = {}) {
+  if (!("headers" in options)) {
+    options.headers = {};
+  }
+
+  options.headers.Autorization = "50537266ded1d3eb1e6923f7f4b2f484";
+
   return fetch(url, options).then((response) => {
     if (response.status !== 200) {
       return response.text().then((text) => {

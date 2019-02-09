@@ -14,16 +14,22 @@ async function testArticlesModel() {
   console.log(article);
 
   let removeRes = await ArticlesModel.remove(article.id);
-  console.log("что с удалением? - " + removeRes);
+  console.log("что с удалением? - ", removeRes);
 
   let articlesNewList = await ArticlesModel.all();
   console.log("articles count = " + articlesNewList.length);
+
+  let addBadRes = await ArticlesModel.add({
+    title: "",
+    content: article.content + " + add"
+  });
+  console.log("добавили статью - ", addBadRes);
 
   let addRes = await ArticlesModel.add({
     title: article.title,
     content: article.content + " + add"
   });
-  console.log("добавили статью - " + addRes);
+  console.log("добавили статью - ", addRes);
 
   let articlesNewestList = await ArticlesModel.all();
   console.log("articles count = " + articlesNewestList.length);
@@ -33,12 +39,26 @@ async function testArticlesModel() {
   let newArticle = articlesNewestList[indNew];
   console.log("select index " + indNew + ", id = " + newArticle.id);
 
+  let editIdRes = await ArticlesModel.edit(0, {
+    title: article.title,
+    content: article.content + " + edit"
+  });
+
+  console.log("что с редактированием? - ", editIdRes);
+
+  let editTRes = await ArticlesModel.edit(newArticle.id, {
+    title: "",
+    content: article.content + " + edit"
+  });
+
+  console.log("что с редактированием? - ", editTRes);
+
   let editRes = await ArticlesModel.edit(newArticle.id, {
     title: article.title,
     content: article.content + " + edit"
   });
 
-  console.log("что с редактированием? - " + editRes);
+  console.log("что с редактированием? - ", editRes);
 }
 
 testArticlesModel()

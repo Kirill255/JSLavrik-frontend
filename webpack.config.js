@@ -11,7 +11,7 @@ let conf = {
   devServer: {
     overlay: true,
     proxy: {
-      "/js-frontend-api/**": {
+      "/js-hw-api/**": {
         // target: "http://localhost/",
         target: "http://faceprog.ru/",
         secure: false,
