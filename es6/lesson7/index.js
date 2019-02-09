@@ -1,5 +1,6 @@
+import "babel-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
-import Cart from "./components/cart";
+import Articles from "./articles";
 
-ReactDOM.render(<Cart />, document.querySelector(".app"));
+ReactDOM.render(<Articles />, document.querySelector(".app"));
