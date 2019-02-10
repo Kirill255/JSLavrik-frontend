@@ -263,3 +263,9 @@ module: {
   "compact": true // добавили
 }
 ```
+
+### Mobx
+
+1. `npm i -S mobx mobx-react`
+
+2. https://mobx.js.org/
