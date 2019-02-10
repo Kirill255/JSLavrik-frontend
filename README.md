@@ -191,7 +191,13 @@ ParodyDom("div", { className: "" }); // и т.д.
 
 А также было [предупреждение](https://stackoverflow.com/questions/38271273/experimental-decorators-warning-in-typescript-compilation/48185725#48185725) от vscode, нужно установить флаг в настройках редактора:
 
+`Experimental support for decorators is a feature that is subject to change in a future release. Set the 'experimentalDecorators' option to remove this warning.`
+
 `"javascript.implicitProjectConfig.experimentalDecorators": true`
+
+Но по прежнему осталась другое [предупреждение](https://stackoverflow.com/questions/31737677/vscode-is-it-possible-to-suppress-experimental-decorator-warnings) от vscode, его не смог убрать, пробовал по разному, но не убралось, впринципе всё работает, просто подчёркивается в паре мест.
+
+`Expression expected.`
 
 #### babel-polyfill
 
@@ -202,6 +208,8 @@ https://www.npmjs.com/package/babel-polyfill - тут старая (но вро�
 1. `npm i -S babel-polyfill`. Сейчас уже вроде поменялась версия `npm i -S @babel/polyfill`
 
 2. Чтобы включить полифилл, вам необходимо указать его в верхней части точки входа в ваше приложение. У нас точка входа это файл './es6/scripts.js' `import "babel-polyfill";` или `import "@babel/polyfill";`
+
+babel-polyfill это достаточно тяжёлый пакет, поэтому если вам не нужны все его возможности, не стоит подключать его, к сожалению нельзя подключать какие-то отдельные его части, но уже существуют более легковесные плагины, например если вам нужен [regenerator-runtime](https://www.npmjs.com/package/regenerator-runtime) или например, babel/polyfill ссылается под капотом на [core-js](https://www.npmjs.com/package/core-js) библиотеку, из которой как раз можно вытащить по отдельности любые нужны пакеты, например [promise](https://github.com/zloirock/core-js/tree/master/packages/core-js/es/promise)
 
 ### Ставим eslint
 
